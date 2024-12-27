@@ -2,11 +2,12 @@
 import axios from '../services/axiosInstance';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
+import type { Song } from '@/types/song';
 
 export const useArtistStore = defineStore('artist', () => {
-    const artist = reactive({});
-    const songs = reactive({});
-    const cacheTimestamps = reactive({}); // 记录缓存时间戳
+    const artist = reactive<Record<string, {id:number,name:string, desc:string, picUrl:string, musicSize:number, albumSize:number, mvSize:number, alias:string[]}>>({});
+    const songs = reactive<Record<string, Song[]>>({});
+    const cacheTimestamps = reactive<Record<string, number>>({}); // 记录缓存时间戳
 
     const CACHE_DURATION = 5 * 60 * 1000; // 5分钟（单位：毫秒）
 
@@ -23,7 +24,7 @@ export const useArtistStore = defineStore('artist', () => {
         }
 
         try{
-            const data = await axios.get(`/artists?id=${encodeURIComponent(id)}`);
+            const data:any = await axios.get(`/artists?id=${encodeURIComponent(id)}`);
             if (data) {
                 //歌手信息部分
                 if(data.artist) {
@@ -35,7 +36,7 @@ export const useArtistStore = defineStore('artist', () => {
                         musicSize: data.artist.musicSize || 0,
                         albumSize: data.artist.albumSize || 0,
                         mvSize: data.artist.mvSize || 0,
-                        alias: data.artist.alias.map(alia => alia) || []
+                        alias: data.artist.alias.map((alia:string) => alia) || []
                     };
                 } else {
                     console.error(`歌手信息缺失，ID: ${id}`);
@@ -43,12 +44,12 @@ export const useArtistStore = defineStore('artist', () => {
 
                 //歌手热歌部分
                 if(data.hotSongs && Array.isArray(data.hotSongs)) {
-                    songs[id] = data.hotSongs.map(song => ({
+                    songs[id] = data.hotSongs.map((song:any) => ({
                         id: song.id,
                         name: song.name,
                         url: generateSongUrl(song.id),
                         artists: Array.isArray(song.ar)
-                            ? song.ar.map((artist) => ({
+                            ? song.ar.map((artist:any) => ({
                                 id: artist.id,
                                 name: artist.name,
                             }))

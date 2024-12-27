@@ -24,7 +24,7 @@ export const useHotartistStore = defineStore('hotartist', () => {
                 artists.length = 0;
                 //专辑信息
                 if (data.artists) {
-                    artists.push(...data.artists.map(artist => ({
+                    artists.push(...data.artists.map((artist:any) => ({
                         id: artist.id,
                         name: artist.name,
                         picUrl: artist.img1v1Url

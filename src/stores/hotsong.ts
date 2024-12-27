@@ -26,11 +26,11 @@ export const useHotsongStore = defineStore('hotsong', () => {
                 songs.length = 0;
                 // 单曲信息
                 if (data.result) {
-                    songs.push(...data.result.map(result => ({
+                    songs.push(...data.result.map((result:any) => ({
                         id: result.id,
                         name: result.name,
                         url: `https://music.163.com/song/media/outer/url?id=${encodeURIComponent(result.id)}.mp3`,
-                        artists: result.song.artists.map(artist => ({
+                        artists: result.song.artists.map((artist:any) => ({
                             id: artist.id,
                             name: artist.name
                         })),

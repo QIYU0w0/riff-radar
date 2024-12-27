@@ -24,7 +24,7 @@ export const useBannerStore = defineStore('banner', () => {
                 albums.length = 0;
                 //专辑信息
                 if (data.albums) {
-                    albums.push(...data.albums.map(album => ({
+                    albums.push(...data.albums.map((album:any) => ({
                         id: album.id,
                         name: album.name || '',
                         picUrl: album.picUrl || ''

@@ -8,7 +8,7 @@ export const useSearchStore = defineStore('search',()=>{
     const songs = ref<Record<string, Song[]>>({});
     const artists = ref<Record<string, {id:number, name:string, picUrl: string}[]>>({});
     const playlists = ref<Record<string, Playlist[]>>({});
-    const cacheTimestamps = ref({}); // 存储每个 query 的缓存时间
+    const cacheTimestamps = ref<Record<string, number>>({}); // 存储每个 query 的缓存时间
     const currentQuery = ref('');
 
     const CACHE_EXPIRATION = 5 * 60 * 1000; // 缓存有效期：5分钟（单位：毫秒）
@@ -30,7 +30,7 @@ export const useSearchStore = defineStore('search',()=>{
 
     async function getPicUrl(id:number) {
         try{
-            const data = await axios.get(`/album?id=${encodeURIComponent(id)}`);
+            const data:any = await axios.get(`/album?id=${encodeURIComponent(id)}`);
             if (data.album){
                 return data.album.picUrl;
             } else {
@@ -46,13 +46,13 @@ export const useSearchStore = defineStore('search',()=>{
             const data: any = await axios.get(`/search?keywords=${encodeURIComponent(query)}&limit=20&type=1`);
             // 可以用到的具体属性：id, name, artists(arr)(id,name),album(id,picId)
             if (data.result && Array.isArray(data.result.songs)) {
-                const fetchAlbumsPromises = data.result.songs.map(async (song) => {
+                const fetchAlbumsPromises = data.result.songs.map(async (song:any) => {
                     const picUrl = await getPicUrl(song.album.id);
                     return {
                         id: song.id,
                         name: song.name,
                         url: `https://music.163.com/song/media/outer/url?id=${encodeURIComponent(song.id)}.mp3`,
-                        artists: song.artists.map(artist => ({
+                        artists: song.artists.map((artist:any) => ({
                             id: artist.id,
                             name: artist.name
                         })),
@@ -78,7 +78,7 @@ export const useSearchStore = defineStore('search',()=>{
             const data: any = await axios.get(`/search?keywords=${encodeURIComponent(query)}&limit=30&type=100`);
             // 可以用到的具体属性：
             if (data.result && Array.isArray(data.result.artists)) {
-                artists.value[query] = data.result.artists.map((artist) => {
+                artists.value[query] = data.result.artists.map((artist:any) => {
                     return {
                         id: artist.id,
                         name: artist.name,
@@ -96,10 +96,10 @@ export const useSearchStore = defineStore('search',()=>{
 
     async function searchPlaylists(query:string) {
         try {
-            const data = await axios.get(`/search?keywords=${encodeURIComponent(query)}&limit=3&type=1000`);
+            const data:any = await axios.get(`/search?keywords=${encodeURIComponent(query)}&limit=3&type=1000`);
             // 可以用到的具体属性：
             if (data.result && Array.isArray(data.result.playlists)) {
-                playlists.value[query] = data.result.playlists.map((playlist) => {
+                playlists.value[query] = data.result.playlists.map((playlist:any) => {
                     return {
                         id: playlist.id,
                         name: playlist.name,

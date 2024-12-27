@@ -59,12 +59,6 @@ const toggleFollow = (id: number, index: number) => {
             message: '关注成功',
             type: 'success',  // 成功类型
             duration: 1000,   // 1秒后自动关闭
-            style: {
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-            }
         });
     }
 }

@@ -36,9 +36,9 @@ const albumId = computed(() => {
 });
 
 // 专辑描述数据
-const desc = computed(() => albumStore.descs[albumId.value] || {});
+const desc = computed(() => albumStore.descs[albumId.value as number] || {});
 
-const songsList = computed(() => albumStore.songs[albumId.value] || []);
+const songsList = computed(() => albumStore.songs[albumId.value as number] || []);
 
 // 页面加载时获取专辑信息
 const loadAlbum = async (id: number | null) => {

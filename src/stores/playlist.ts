@@ -55,7 +55,7 @@ export const usePlaylistStore = defineStore('playlist', ()=>{
     async function getSongs(id:number, trackCnt: number){
         const limit = 10; // 每次请求的最大歌曲数
         const totalPages = Math.ceil(trackCnt / limit); // 计算总页数
-        const allSongs = []; // 用于存储所有歌曲
+        const allSongs:Song[] = []; // 用于存储所有歌曲
         
         try {
             // 构造所有请求的 Promise

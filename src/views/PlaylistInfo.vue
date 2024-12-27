@@ -34,10 +34,10 @@ const playlistId = computed(() => {
 });
 
 // 歌单描述数据
-const descs = computed(() => playlistStore.descs[playlistId.value] || {});
+const descs = computed(() => playlistStore.descs[playlistId.value as number] || {});
 
 // 歌单单曲数据
-const songsList = computed(() => playlistStore.songs[playlistId.value] || []);
+const songsList = computed(() => playlistStore.songs[playlistId.value as number] || []);
 
 // 页面加载时获取歌单信息
 const loadPlaylist = async (id: number | null) => {

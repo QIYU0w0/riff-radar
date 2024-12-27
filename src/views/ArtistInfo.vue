@@ -38,7 +38,7 @@ const myartistStore = useMyartistStore();
 // 当前歌手ID（确保是有效的数字）
 const artistId = computed(() => {
     const id = route.query.artistid;
-    return id && !isNaN(Number(id)) ? Number(id) : null;
+    return id && !isNaN(Number(id)) ? Number(id) : 0;
 });
 
 // 歌手数据
@@ -88,12 +88,6 @@ const toggleFollow = (id: number) => {
             message: '关注成功',
             type: 'success',  // 成功类型
             duration: 1000,   // 2秒后自动关闭
-            style: {
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-            }
         });
     }
 }

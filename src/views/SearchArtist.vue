@@ -28,7 +28,7 @@ watch(() => route.query.keywords, async (newQuery) => {
         if (!searchStore.isCacheValid(newQuery as string)) {
             await searchStore.searchAll(newQuery as string);
         }
-        artistsList.value = searchStore.artists[newQuery] || [];
+        artistsList.value = searchStore.artists[newQuery as string] || [];
     }
 });
 

@@ -25,7 +25,7 @@ export const useHotplaylistStore = defineStore('hotplaylist', () => {
                 playlists.length = 0;
                 //专辑信息
                 if (data.result) {
-                    playlists.push(...data.result.map(playlist => ({
+                    playlists.push(...data.result.map((playlist:any) => ({
                         id: playlist.id,
                         name: playlist.name,
                         picUrl: playlist.picUrl,
