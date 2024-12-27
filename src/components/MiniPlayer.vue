@@ -129,9 +129,9 @@ const getSelfPlayPauseIcon = (url: string) => {
     // if (playinglistStore.playingUrl === url && (!playinglistStore.audio.paused)) {
     if (playinglistStore.playingUrl === url && (playinglistStore.isPlaying)) {
         // 这里的地址必须是相对根目录的
-        return "/src/components/icons/pause.svg";
+        return "./icons/pause.svg";
     }
-    return "/src/components/icons/play.svg";
+    return "./icons/play.svg";
 };
 
 const playSelfSong = (url: string) => {
@@ -193,8 +193,8 @@ const playNext = (url: string) => {
 
 const getLikeDislikeIcon = (id: number) => {
     return mysongStore.isAtList(id)
-        ? "/src/components/icons/heartfill.svg"
-        : "/src/components/icons/heart.svg";
+        ? "./icons/heartfill.svg"
+        : "./icons/heart.svg";
 }
 
 const toggleLike = (id: number) => {
@@ -236,9 +236,9 @@ const getPlayPauseIcon = (url: string) => {
     // if (playinglistStore.playingUrl === url && (!playinglistStore.audio.paused)) {
     if (playinglistStore.playingUrl === url && (playinglistStore.isPlaying)) {
         // 这里的地址必须是相对根目录的
-        return "/src/components/icons/暂停.svg";
+        return "./icons/暂停.svg";
     }
-    return "/src/components/icons/播放.svg";
+    return "./icons/播放.svg";
 };
 
 const playSong = (url: string, index: number) => {
