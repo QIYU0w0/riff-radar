@@ -19,9 +19,13 @@
             <p class="album-name">{{ song.album.name }}</p>
             <!-- <div class="playit" @click=""></div> -->
             <div class="playit" @click="playSong(song.url, index)">
-                <img :src="getPlayPauseIcon(song.url)" alt="">
+                <img v-if="getPlayPauseIcon(song.url)" src="./icons/播放.svg" alt="">
+                <img v-else src="./icons/暂停.svg" alt="">
             </div>
-            <div class="like" @click="toggleLike(song.id, index)"><img :src="getLikeDislikeIcon(song.id)" alt=""></div>
+            <div class="like" @click="toggleLike(song.id, index)">
+                <img v-if="getLikeDislikeIcon(song.id)" src="./icons/heartfill.svg" alt="">
+                <img v-else src="./icons/heart.svg" alt="">
+            </div>
         </li>
     </ul>
 
@@ -57,8 +61,8 @@ onMounted(async () => {
 
 const getLikeDislikeIcon = (id: number) => {
     return mysongStore.isAtList(id)
-        ? "/src/components/icons/heartfill.svg"
-        : "/src/components/icons/heart.svg";
+        ? true
+        : false;
 }
 
 const toggleLike = (id: number, index: number) => {
@@ -97,9 +101,9 @@ const getPlayPauseIcon = (url: string) => {
     // if (playinglistStore.playingUrl === url && (!playinglistStore.audio.paused)) {
     if (playinglistStore.playingUrl === url && (playinglistStore.isPlaying)) {
         // 这里的地址必须是相对根目录的
-        return "/src/components/icons/暂停.svg";
+        return false;
     }
-    return "/src/components/icons/播放.svg";
+    return true;
 };
 
 const playSong = (url: string, index: number) => {

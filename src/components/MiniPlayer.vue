@@ -15,7 +15,9 @@
         <div class="player-info">
             <div class="player-buttons">
                 <div class="to-pre" @click="playPrev(songUrl)"><img src="./icons/prev.svg" alt=""></div>
-                <div class="play-it" @click="playSelfSong(songUrl)"><img :src="getSelfPlayPauseIcon(songUrl)" alt="">
+                <div class="play-it" @click="playSelfSong(songUrl)">
+                    <img v-if="getSelfPlayPauseIcon(songUrl)" src="./icons/play.svg" alt="">
+                    <img v-else src="./icons/pause.svg" alt="">
                 </div>
                 <div class="to-next" @click="playNext(songUrl)"><img src="./icons/next.svg" alt=""></div>
             </div>
@@ -26,7 +28,10 @@
             </div>
         </div>
         <div class="right-buttons">
-            <div class="like" @click="toggleLike(songId)"><img :src="getLikeDislikeIcon(songId)" alt=""></div>
+            <div class="like" @click="toggleLike(songId)">
+                <img v-if="getLikeDislikeIcon(songId)" src="./icons/heartfill.svg" alt="">
+                <img v-else src="./icons/heart.svg" alt="">
+            </div>
             <div class="list" @click="displayList()"><img src="./icons/list.svg" alt=""></div>
         </div>
     </div>
@@ -39,9 +44,13 @@
                 {{ song.artists.map(artist => artist.name).join(', ') }}
             </p>
             <div class="play-button" @click="playSong(song.url, index)">
-                <img :src="getPlayPauseIcon(song.url)" alt="">
+                <img v-if="getPlayPauseIcon(songUrl)" src="./icons/播放.svg" alt="">
+                <img v-else src="./icons/暂停.svg" alt="">
             </div>
-            <div class="like-button" @click="toggleLike(song.id)"><img :src="getLikeDislikeIcon(song.id)" alt=""></div>
+            <div class="like-button" @click="toggleLike(song.id)">
+                <img v-if="getLikeDislikeIcon(song.id)" src="./icons/heartfill.svg" alt="">
+                <img v-else src="./icons/heart.svg" alt="">
+            </div>
         </div>
     </div>
 </template>
@@ -126,12 +135,10 @@ onUnmounted(() => {
 
 
 const getSelfPlayPauseIcon = (url: string) => {
-    // if (playinglistStore.playingUrl === url && (!playinglistStore.audio.paused)) {
     if (playinglistStore.playingUrl === url && (playinglistStore.isPlaying)) {
-        // 这里的地址必须是相对根目录的
-        return "./icons/pause.svg";
+        return false;
     }
-    return "./icons/play.svg";
+    return true;
 };
 
 const playSelfSong = (url: string) => {
@@ -193,8 +200,8 @@ const playNext = (url: string) => {
 
 const getLikeDislikeIcon = (id: number) => {
     return mysongStore.isAtList(id)
-        ? "./icons/heartfill.svg"
-        : "./icons/heart.svg";
+        ? true
+        : false;
 }
 
 const toggleLike = (id: number) => {
@@ -236,9 +243,9 @@ const getPlayPauseIcon = (url: string) => {
     // if (playinglistStore.playingUrl === url && (!playinglistStore.audio.paused)) {
     if (playinglistStore.playingUrl === url && (playinglistStore.isPlaying)) {
         // 这里的地址必须是相对根目录的
-        return "./icons/暂停.svg";
+        return false;
     }
-    return "./icons/播放.svg";
+    return true;
 };
 
 const playSong = (url: string, index: number) => {
